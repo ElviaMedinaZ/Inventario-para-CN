@@ -9,7 +9,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 const db = mysql.createConnection({
-  host: 'localhost',
+  host: '127.0.0.1',
+  port : 3306,
   user: 'root',
   password: '1234', 
   database: 'inventario_db'
@@ -87,14 +88,26 @@ app.delete('/usuarios/:id', (req, res) => {
 });
 
 // --- GESTIÓN DE ARCHIVOS DESDE /VISTAS/ ---
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../frontend/vistas/index.html')));
-app.get('/', (req, res) => {res.sendFile(path.join(__dirname, '../frontend/vistas/login.html'));});
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/vistas/login.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/vistas/login.html'));
+});
 
 app.get('/sistema', (req, res) => {
-    // Esta ruta entregará el panel principal (index.html)
-res.sendFile(path.join(__dirname, '../frontend/vistas/index.html'));});
-app.get('/registro', (req, res) => res.sendFile(path.join(__dirname, '../frontend/vistas/registro.html')));
+  res.sendFile(path.join(__dirname, '../frontend/vistas/index.html'));
+});
 
-app.get('*', (req, res) => res.redirect('/login'));
+app.get('/registro', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/vistas/registro.html'));
+});
+
+app.use((req, res) => {
+  res.status(404).send('Página no encontrada');
+});
+
+
 
 app.listen(3000, () => console.log('🚀 SISTEMA EN: http://localhost:3000'));
