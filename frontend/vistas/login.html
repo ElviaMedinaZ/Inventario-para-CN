@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SISC | Acceso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-900 flex items-center justify-center h-screen font-['Plus_Jakarta_Sans']">
+    <div class="bg-white p-10 rounded-[40px] shadow-2xl w-full max-w-md">
+        <div class="text-center mb-10">
+            <div class="bg-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/40">
+                <i class="fas fa-lock text-white text-2xl"></i>
+            </div>
+            <h1 class="text-3xl font-black text-slate-800 tracking-tight">Bienvenida</h1>
+            <p class="text-slate-400 font-bold text-sm mt-2 uppercase tracking-widest">SISC Modular</p>
+        </div>
+
+        <div class="space-y-6">
+            <input type="email" id="email" placeholder="Tu correo" class="w-full p-5 bg-slate-50 border-2 border-transparent rounded-2xl focus:border-blue-500 outline-none font-bold transition-all">
+            <input type="password" id="pass" placeholder="Tu contraseña" class="w-full p-5 bg-slate-50 border-2 border-transparent rounded-2xl focus:border-blue-500 outline-none font-bold transition-all">
+            <button onclick="login()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all">Entrar al Sistema</button>
+        </div>
+        
+        <p class="text-center mt-8 text-sm font-bold text-slate-400">
+            ¿No tienes cuenta? <a href="/vistas/registro.html" class="text-blue-600">Regístrate aquí</a>
+        </p>
+    </div>
+
+    <script>
+        async function login() {
+            const correo = document.getElementById('email').value;
+            const password = document.getElementById('pass').value;
+
+            const res = await fetch('http://localhost:3000/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo, password })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                localStorage.setItem('userSISC', JSON.stringify(data.user));
+                // Cambia esto para que te mande a la ruta del sistema
+                window.location.href = '/sistema'; 
+            } else {
+                alert("Usuario o contraseña incorrectos");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<div class="max-w-2xl mx-auto bg-white p-10 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 text-center">
+    <div class="w-20 h-20 bg-slate-50 text-slate-300 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+        <i class="fas fa-file-invoice"></i>
+    </div>
+    <h3 class="text-2xl font-black text-slate-800 mb-2">Generar Informe de Inventario</h3>
+    <p class="text-slate-500 text-sm mb-8 px-10">Exporta todos tus productos y niveles de stock a un formato profesional listo para imprimir.</p>
+    
+    <div class="flex space-x-4 justify-center">
+        <button onclick="descargarReporte('pdf')" class="bg-slate-800 text-white px-8 py-3 rounded-2xl font-bold hover:bg-slate-700 transition flex items-center shadow-lg shadow-slate-200">
+            <i class="fas fa-file-pdf mr-2"></i> Descargar PDF
+        </button>
+        <button onclick="descargarReporte('excel')" class="bg-emerald-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-emerald-700 transition flex items-center shadow-lg shadow-emerald-100">
+            <i class="fas fa-file-excel mr-2"></i> Descargar Excel (CSV)
+        </button>
+    </div>
+</div>
