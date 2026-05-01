@@ -6,7 +6,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use('/vistas', express.static(path.join(__dirname, '../frontend/vistas')));
+app.use(express.static(path.join(__dirname, '../frontend'), {
+  index: false
+}));
 
 const db = mysql.createConnection({
   host: '127.0.0.1',
@@ -89,20 +92,21 @@ app.delete('/usuarios/:id', (req, res) => {
 
 // --- GESTIÓN DE ARCHIVOS DESDE /VISTAS/ ---
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/vistas/login.html'));
+  res.redirect('/login');
 });
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/vistas/login.html'));
 });
 
-app.get('/sistema', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/vistas/index.html'));
-});
-
 app.get('/registro', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/vistas/registro.html'));
 });
+
+app.get('/sistema', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
+
 
 app.use((req, res) => {
   res.status(404).send('Página no encontrada');

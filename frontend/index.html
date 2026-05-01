@@ -43,11 +43,22 @@
             </button>
         </nav>
         <div class="p-6 border-t border-slate-800/50">
-            <div class="bg-slate-800/50 rounded-2xl p-4 flex items-center">
-                <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center font-black mr-3">EY</div>
-                <div>
-                    <p class="text-xs font-bold text-white leading-none">Elvia Yolanda</p>
-                    <p class="text-[10px] text-slate-500 mt-1 uppercase">Ingeniería IDS</p>
+            <div class="relative">
+                <div onclick="toggleUserMenu()" class="bg-slate-800/50 rounded-2xl p-4 flex items-center cursor-pointer hover:bg-slate-700 transition">
+                    <div id="user-avatar" class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center font-black mr-3">
+                    U
+                    </div>
+                    <div>
+                    <p id="user-name" class="text-xs font-bold text-white leading-none">Usuario</p>
+                    <p class="text-[10px] text-slate-500 mt-1 uppercase">Perfil</p>
+                    </div>
+                </div>
+
+                <!-- Dropdown -->
+                <div id="user-menu" class="hidden absolute bottom-16 left-0 w-full bg-white rounded-2xl shadow-xl overflow-hidden z-50">
+                    <button onclick="cerrarSesion()" class="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 font-bold">
+                    <i class="fas fa-right-from-bracket mr-2"></i> Cerrar sesión
+                    </button>
                 </div>
             </div>
         </div>

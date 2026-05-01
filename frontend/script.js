@@ -35,6 +35,22 @@ async function loadView(viewName) {
 
 const user = JSON.parse(session);
 
+function cargarUsuarioActual() {
+  const userData = JSON.parse(localStorage.getItem('userSISC'));
+
+  if (!userData) return;
+
+  const nameElement = document.getElementById('user-name');
+  if (nameElement) {
+    nameElement.innerText = userData.nombre;
+  }
+
+  const avatar = document.getElementById('user-avatar');
+  if (avatar && userData.nombre) {
+    avatar.innerText = userData.nombre.charAt(0).toUpperCase();
+  }
+}
+
 async function descargarReporte(tipo) {
     try {
         const res = await fetch(`${API_BASE}/productos`);
@@ -192,6 +208,14 @@ async function initUsuarios() {
         </tr>
     `).join('');
 }
+function toggleUserMenu() {
+  document.getElementById('user-menu').classList.toggle('hidden');
+}
+
+function cerrarSesion() {
+  localStorage.removeItem('userSISC');
+  window.location.href = '/login';
+}
 function toggleModal() { document.getElementById('modal').classList.toggle('hidden'); }
 
 async function guardarProducto() {
@@ -206,4 +230,7 @@ async function guardarProducto() {
     loadView('inventario');
 }
 
-window.onload = () => loadView('dashboard');
+window.onload = () => {
+  cargarUsuarioActual();
+  loadView('dashboard');
+};
