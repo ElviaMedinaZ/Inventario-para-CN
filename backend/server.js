@@ -11,18 +11,29 @@ app.use(express.static(path.join(__dirname, '../frontend'), {
   index: false
 }));
 
-const db = mysql.createConnection({
-  host: '127.0.0.1',
-  port : 3306,
-  user: 'root',
-  password: '1234', 
-  database: 'inventario_db'
-});
 
-db.connect(err => {
-  if (err) console.error('Error MySQL: ' + err.stack);
-  else console.log('✅ Servidor SISC vinculado a MySQL correctamente');
-});
+let db;
+
+function conectarDB() {
+    db = mysql.createConnection({
+        host: process.env.DB_HOST || 'localhost',
+        port: process.env.DB_PORT || 3306,
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '1234',
+        database: process.env.DB_NAME || 'inventario_db'
+    });
+
+    db.connect(err => {
+        if (err) {
+            console.log('Esperando MySQL...');
+            setTimeout(conectarDB, 5000);
+        } else {
+            console.log('Servidor SISC vinculado a MySQL correctamente');
+        }
+    });
+}
+
+conectarDB();
 
 // --- AUTENTICACIÓN ---
 app.post('/auth/registro', (req, res) => {
@@ -41,6 +52,17 @@ app.post('/auth/login', (req, res) => {
         if (err) return res.status(500).json(err);
         if (results.length > 0) res.json({ success: true, user: results[0] });
         else res.status(401).json({ success: false });
+    });
+});
+
+app.post('/usuarios', (req, res) => {
+    const { nombre, correo, rol } = req.body;
+    const password = '1234';
+
+    const sql = 'INSERT INTO usuarios (nombre, correo, rol, password) VALUES (?, ?, ?, ?)';
+    db.query(sql, [nombre, correo, rol, password], (err, result) => {
+        if (err) return res.status(500).json({ error: "No se pudo registrar usuario" });
+        res.json({ success: true, id: result.insertId });
     });
 });
 

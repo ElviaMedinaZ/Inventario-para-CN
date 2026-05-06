@@ -38,7 +38,7 @@
         </div>
         
         <p class="text-center mt-8 text-sm font-bold text-slate-400">
-            ¿Ya tienes acceso? <a href="/login.html" class="text-emerald-600 hover:underline">Inicia sesión</a>
+            ¿Ya tienes acceso? <a href="/login" class="text-emerald-600 hover:underline">Inicia sesión</a>
         </p>
     </div>
 
@@ -60,7 +60,7 @@
             const data = await res.json();
             if (data.success) {
                 alert("¡Registro exitoso! Ya puedes iniciar sesión.");
-                window.location.href = '/login.html';
+                window.location.href = '/login';
             } else {
                 alert("Error: " + (data.error || "No se pudo completar el registro"));
             }
